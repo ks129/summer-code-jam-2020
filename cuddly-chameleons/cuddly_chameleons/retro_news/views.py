@@ -10,10 +10,6 @@ from retro_news import serializers
 from retro_news.models import BlogArticle
 
 
-class IsJwtAuthOrReadOnly(permissions.BasePermission):
-    """Permission class that allow read only access when user is not authenticated or is not superuser."""
-
-
 class BlogArticleListView(APIView):
     """Handles BlogArticle object listing and creation."""
 
