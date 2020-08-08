@@ -55,6 +55,9 @@ class BlogArticleActionView(APIView):
 
     def put(self, request: Request, pk: int):
         """Update blog post by primary key."""
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         post = self.get_object(pk)
         serializer = serializers.BlogArticleSerializer(post, request.data)
         if serializer.is_valid():
@@ -65,6 +68,9 @@ class BlogArticleActionView(APIView):
 
     def delete(self, request: Request, pk: int):
         """Delete blog post by primary key."""
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
