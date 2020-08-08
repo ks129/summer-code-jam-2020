@@ -8,16 +8,14 @@ from retro_news.models import CustomUser, BlogArticle
 class BlogArticleSerializer(serializers.ModelSerializer):
     """Serializer for BlogArticle objects."""
 
-    title           = serializers.CharField(max_length=100, required=True)
-    content         = serializers.CharField(max_length=10000)
-    author          = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
-    date_created    = serializers.DateField()
-
+    title = serializers.CharField(max_length=100, required=True)
+    content = serializers.CharField()
+    author = serializers.PrimaryKeyRelatedField(read_only=True, many=False)
 
     class Meta:
-        model   = BlogArticle
-        fields  = ('title','author','content','date_created')
-        
+        model = BlogArticle
+        fields = ('title', 'author', 'content')
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """Serializer for new user creation."""
@@ -49,3 +47,16 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         data['superuser'] = self.user.is_superuser
         return data
+
+
+class BlogArticleGetSerializer(serializers.ModelSerializer):
+    """Serializer for BlogArticle objects getting."""
+
+    id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(max_length=100, required=True)
+    content = serializers.CharField()
+    author = CustomUserSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = BlogArticle
+        fields = ('id', 'title', 'content', 'author')
