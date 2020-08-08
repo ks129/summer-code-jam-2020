@@ -9,6 +9,8 @@ class CustomUser(AbstractUser):
 
 
 class BlogArticle(models.Model):
+    """Object for blog post."""
+
     title = models.CharField(max_length=100, unique=True)
     content = models.TextField()
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
