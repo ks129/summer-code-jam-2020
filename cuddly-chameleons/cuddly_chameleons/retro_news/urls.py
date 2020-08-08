@@ -1,7 +1,4 @@
 from django.urls import path
-from django.conf.urls import include
-
-# from rest_framework import routers
 from rest_framework_simplejwt import views
 
 from retro_news import views as retro_views
